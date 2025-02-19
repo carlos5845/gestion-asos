@@ -6,10 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasRoles;
     use HasFactory, Notifiable;
 
     /**
@@ -48,5 +50,9 @@ class User extends Authenticatable
     public function adminlte_image()
     {
         return 'https://picsum.photos/300/300';
+    }
+    public function adminlte_desc()
+    {
+        return 'Hola,' . \Illuminate\Support\Facades\Auth::user()->name;
     }
 }

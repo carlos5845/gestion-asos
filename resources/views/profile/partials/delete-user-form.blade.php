@@ -7,14 +7,15 @@
             {{ __('Una vez que se elimine su cuenta, todos sus recursos y datos se eliminarán permanentemente. Antes de eliminar su cuenta, descargue cualquier dato o información que desee conservar.') }}
         </p>
     </header>
-
+    
     <!-- Botón para abrir el modal -->
-    <button 
-        class="btn btn-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#confirm-user-deletion">
-        {{ __('Eliminar Cuenta') }}
-    </button>
+    <x-adminlte-button 
+        label="{{ __('Eliminar Cuenta') }}" 
+        theme="danger" 
+        icon="fas fa-trash-alt" 
+        data-bs-toggle="modal" 
+        data-bs-target="#confirm-user-deletion" />
+    
 
     <!-- Modal de confirmación -->
     <div class="modal fade" id="confirm-user-deletion" tabindex="-1" aria-labelledby="confirm-user-deletion-label" aria-hidden="true">
@@ -38,9 +39,9 @@
 
                         <!-- Campo de contraseña -->
                         <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Password') }}</label>
+                            <label for="password" class="form-label">{{ __('Contraseña') }}</label>
                             <input 
-                                type="password" 
+                                type="text" 
                                 id="password" 
                                 name="password" 
                                 class="form-control @error('password', 'userDeletion') is-invalid @enderror" 

@@ -17,60 +17,62 @@
     <form method="post" action="{{ route('profile.update') }}">
         @csrf
         @method('patch')
-
-        <div class="mb-3">
-            <label for="name" class="form-label">{{ __('Nombre') }}</label>
-            <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                class="form-control @error('name') is-invalid @enderror" 
-                value="{{ old('name', $user->name) }}" 
-                required 
-                autofocus 
-                autocomplete="name">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div> 
-
-
+        <!-- Campo Nombre -->
+        <x-adminlte-input 
+        name="name" 
+        label="{{ __('Nombre') }}" 
+        placeholder="Ingrese su nombre" 
+        label-class="text-lightblue" 
+        value="{{ old('name', $user->name) }}" 
+        required 
+        autofocus 
+        autocomplete="name" 
+        error-key="name">
+        <x-slot name="prependSlot">
+            <div class="input-group-text">
+                <i class="fas fa-user text-lightblue"></i>
+            </div>
+        </x-slot>
+    </x-adminlte-input>
+    
         <!-- Campo Email -->
-        <div class="mb-3">
-            <label for="email" class="form-label">{{ __('Email') }}</label>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                class="form-control @error('email') is-invalid @enderror" 
-                value="{{ old('email', $user->email) }}" 
-                required 
-                autocomplete="username">
-            @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-          
+    <x-adminlte-input 
+        name="email" 
+        label="{{ __('Email') }}" 
+        type="email" 
+        placeholder="Ingrese su correo electrónico" 
+        label-class="text-lightblue" 
+        value="{{ old('email', $user->email) }}" 
+        required 
+        autocomplete="username" 
+        error-key="email">
+        <x-slot name="prependSlot">
+            <div class="input-group-text">
+                <i class="fas fa-envelope text-lightblue"></i>
+            </div>
+        </x-slot>
+    </x-adminlte-input>
 
-            <!-- Verificación de correo -->
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div class="mt-2">
-                    <p class="text-muted">
-                        {{ __('Su dirección de correo electrónico no está verificada.') }}
-                        <button 
-                            form="send-verification" 
-                            class="btn btn-link p-0 text-decoration-none">
-                            {{ __('Haga clic aquí para volver a enviar el correo electrónico de verificación.') }}
-                        </button>
-                    </p>
+<!-- Verificación de correo -->
+@if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+<div class="mt-2">
+    <p class="text-muted">
+        {{ __('Su dirección de correo electrónico no está verificada.') }}
+        <button 
+            form="send-verification" 
+            class="btn btn-link p-0 text-decoration-none">
+            {{ __('Haga clic aquí para volver a enviar el correo electrónico de verificación.') }}
+        </button>
+    </p>
 
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="text-success mt-2">
-                            {{ __('Se ha enviado un nuevo enlace de verificación a su dirección de correo electrónico..') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
-        </div>
+    @if (session('status') === 'verification-link-sent')
+        <p class="text-success mt-2">
+            {{ __('Se ha enviado un nuevo enlace de verificación a su dirección de correo electrónico.') }}
+        </p>
+    @endif
+</div>
+@endif
+
 
 <!-- Verificación de correo -->
 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -94,16 +96,24 @@
 
 
         <!-- Botón Guardar -->
-        <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-primary">
-                {{ __('Guardar') }}
-            </button>
-
-            @if (session('status') === 'profile-updated')
-                <p class="text-success m-0">
-                    {{ __('Guardado.') }}
-                </p>
-            @endif
+        <div class="d-flex align-items-center">
+            <x-adminlte-button 
+                type="submit" 
+                label="{{ __('Guardar') }}" 
+                theme="primary" 
+                class="me-3" 
+                icon="fas fa-save" />
+                @if (session('status') === 'profile-updated')
+                    <p 
+                        class="text-success mb-0"
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        x-init="setTimeout(() => show = false, 2000)">
+                        <i class="fas fa-check-circle me-2"></i>
+                        {{ __('Guardado.') }}
+                    </p>
+                @endif
         </div>
     </form>
 </section>

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Gestion',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -134,10 +134,10 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header' => true,
+    'usermenu_header_class' => 'bg-success',
     'usermenu_image' => true,
-    'usermenu_desc' => false,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 
     /*
@@ -152,12 +152,12 @@ return [
     |
     */
 
-    'layout_topnav' => true,
+    'layout_topnav' => false,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => ['xs' => true, 'md' => false, 'xl' => true],
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => true,
+    'layout_dark_mode' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -305,24 +305,117 @@ return [
             'topnav_right' => true,
         ],
 
-        // Sidebar items:
+        // Barra de búsqueda en el sidebar
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Buscar',
         ],
+
+        // Dashboard principal
         [
             'text' => 'Dashboard',
             'url'  => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
         ],
+
+        // Gestión de Grupos y Asociaciones
         [
-            'text' => 'datos',
-            'url'  => 'datos',
-            'icon' => 'fa-database',
+            'text'    => 'Grupos y Asociaciones',
+            'icon'    => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Grupos',
+                    'url'  => 'grupos',
+                    'icon' => 'fas fa-layer-group',
+                ],
+                [
+                    'text' => 'Categorías',
+                    'url'  => 'categorias',
+                    'icon' => 'fas fa-tags',
+                ],
+                [
+                    'text' => 'Agrupamientos',
+                    'url'  => 'agrupamientos',
+                    'icon' => 'fas fa-object-group',
+                ],
+            ],
         ],
+
+        // Gestión de Socios
         [
-            'text' => 'productos',
-            'url'  => 'productos',
+            'text'    => 'Socios',
+            'icon'    => 'fas fa-user-friends',
+            'submenu' => [
+                [
+                    'text' => 'Lista de Socios',
+                    'url'  => 'socios',
+                    'icon' => 'fas fa-users',
+                ],
+                [
+                    'text' => 'Padrón de Socios',
+                    'url'  => 'padron-socios',
+                    'icon' => 'fas fa-address-book',
+                ],
+            ],
+        ],
+
+        // Junta Directiva y Cargos
+        [
+            'text'    => 'Junta Directiva',
+            'icon'    => 'fas fa-user-tie',
+            'submenu' => [
+                [
+                    'text' => 'Directivos',
+                    'url'  => 'junta-directiva',
+                    'icon' => 'fas fa-briefcase',
+                ],
+                [
+                    'text' => 'Cargos',
+                    'url'  => 'cargos',
+                    'icon' => 'fas fa-id-badge',
+                ],
+            ],
+        ],
+
+        // Gestión de Documentos y Actas
+        [
+            'text'    => 'Documentos y Actas',
+            'icon'    => 'fas fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Acta de Constitución',
+                    'url'  => 'acta-constitucion',
+                    'icon' => 'fas fa-file-alt',
+                ],
+                [
+                    'text' => 'Acta de Constatación',
+                    'url'  => 'acta-constatacion',
+                    'icon' => 'fas fa-file-signature',
+                ],
+                [
+                    'text' => 'Resoluciones GDH',
+                    'url'  => 'resolucion-gdh',
+                    'icon' => 'fas fa-gavel',
+                ],
+                [
+                    'text' => 'Vigencia de Poder',
+                    'url'  => 'vigencia-poder',
+                    'icon' => 'fas fa-university',
+                ],
+            ],
+        ],
+
+        // Configuración de Días Laborales
+        [
+            'text'    => 'Configuración',
+            'icon'    => 'fas fa-cogs',
+            'submenu' => [
+                [
+                    'text' => 'Días Laborables',
+                    'url'  => 'dia-laborable',
+                    'icon' => 'fas fa-calendar-alt',
+                ],
+            ],
         ],
 
     ],
