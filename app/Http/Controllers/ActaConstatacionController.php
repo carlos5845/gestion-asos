@@ -7,59 +7,57 @@ use Illuminate\Http\Request;
 
 class ActaConstatacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $actas = ActaConstatacion::all();
+        return view('acta_constatacion.index', compact('actas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('acta_constatacion.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'num_constatacion' => 'required|string|max:45|unique:acta_constatacion,num_constatacion',
+        ]);
+
+        ActaConstatacion::create($request->all());
+
+        return redirect()->route('acta_constatacion.index')->with('success', 'Acta de Constatación creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ActaConstatacion $actaConstatacion)
+    public function show($idacta_constatacion)
     {
-        //
+        $acta = ActaConstatacion::findOrFail($idacta_constatacion);
+        return view('acta_constatacion.show', compact('acta'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ActaConstatacion $actaConstatacion)
+    public function edit($idacta_constatacion)
     {
-        //
+        $acta = ActaConstatacion::findOrFail($idacta_constatacion);
+        return view('acta_constatacion.edit', compact('acta'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ActaConstatacion $actaConstatacion)
+    public function update(Request $request, $idacta_constatacion)
     {
-        //
+        $request->validate([
+            'num_constatacion' => 'required|string|max:45|unique:acta_constatacion,num_constatacion,' . $idacta_constatacion . ',idacta_constatacion',
+        ]);
+
+        $acta = ActaConstatacion::findOrFail($idacta_constatacion);
+        $acta->update($request->all());
+
+        return redirect()->route('acta_constatacion.index')->with('success', 'Acta de Constatación actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ActaConstatacion $actaConstatacion)
+    public function destroy($idacta_constatacion)
     {
-        //
+        $acta = ActaConstatacion::findOrFail($idacta_constatacion);
+        $acta->delete();
+
+        return redirect()->route('acta_constatacion.index')->with('success', 'Acta de Constatación eliminada correctamente.');
     }
 }

@@ -12,54 +12,50 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::all();
+        return view('categorias.index', compact('categorias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tipo' => 'required|string|max:45',
+        ]);
+
+        Categoria::create($request->all());
+
+        return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categoria $categoria)
+    public function show(Categoria $idcategoria)
     {
-        //
+        return view('categorias.show', compact('idcategoria'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
+    public function edit(Categoria $idcategoria)
     {
-        //
+        return view('categorias.edit', compact('idcategoria'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, Categoria $idcategoria)
     {
-        //
+        $request->validate([
+            'tipo' => 'required|string|max:45',
+        ]);
+
+        $idcategoria->update($request->all());
+
+        return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categoria $categoria)
+    public function destroy(Categoria $idcategoria)
     {
-        //
+        $idcategoria->delete();
+        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente.');
     }
 }

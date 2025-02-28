@@ -14,14 +14,20 @@ use App\Http\Controllers\PadronSociosController;
 use App\Http\Controllers\ActaConstitucionController;
 use App\Http\Controllers\ActaConstatacionController;
 use App\Http\Controllers\ResolucionGdhController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,25 +35,44 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Grupos y Asociaciones
-Route::resource('grupos', GrupoController::class);
-Route::resource('agrupamientos', AgrupamientoController::class);
-Route::resource('categorias', CategoriaController::class);
+// Rutas para cada módulo
 
-// Socios
-Route::resource('socios', SocioController::class);
-Route::resource('padron-socios', PadronSociosController::class);
+Route::resource('categorias', CategoriaController::class)->parameters([
+    'categorias' => 'idcategoria'
+]);
+Route::resource('agrupamiento', AgrupamientoController::class);
+Route::resource('cargo', CargoController::class)->parameters([
+    'cargo' => 'idcargo'
+]);
+Route::resource('dia_laborable', DiaLaborableController::class)->parameters([
+    'dia_laborable' => 'iddia_laborable'
+]);
+Route::resource('grupo', GrupoController::class)->parameters([
+    'grupo' => 'idgrupo'
+]);
+Route::resource('socio', SocioController::class)->parameters([
+    'socio' => 'idsocio'
+]);
+Route::resource('junta_directiva', JuntaDirectivaController::class)->parameters([
+    'junta_directiva' => 'idjunta_directiva'
+]);
+Route::resource('padron_socios', PadronSociosController::class)->parameters([
+    'padron_socios' => 'idpadron_socios'
+]);
 
-// Junta Directiva
-Route::resource('junta-directiva', JuntaDirectivaController::class);
-Route::resource('cargos', CargoController::class);
+Route::resource('acta_constitucion', ActaConstitucionController::class)->parameters([
+    'acta_constitucion' => 'idacta_constitucion'
+]);
 
-// Documentos y Actas
-Route::resource('acta-constitucion', ActaConstitucionController::class);
-Route::resource('acta-constatacion', ActaConstatacionController::class);
-Route::resource('resolucion-gdh', ResolucionGdhController::class);
-Route::resource('vigencia-poder', VigenciaPoderController::class);
+Route::resource('acta_constatacion', ActaConstatacionController::class)->parameters([
+    'acta_constatacion' => 'idacta_constatacion'
+]);
 
-// Configuración
-Route::resource('dia-laborable', DiaLaborableController::class);
+Route::resource('resolucion_gdh', ResolucionGdhController::class)->parameters([
+    'resolucion_gdh' => 'idresolucion_gdh'
+]);
+
+Route::resource('vigencia_poder', VigenciaPoderController::class)->parameters([
+    'vigencia_poder' => 'idvigencia_poder'
+]);
 require __DIR__ . '/auth.php';

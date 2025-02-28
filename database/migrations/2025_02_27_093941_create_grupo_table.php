@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up() {
+    public function up()
+    {
         Schema::create('grupo', function (Blueprint $table) {
             $table->unsignedBigInteger('idgrupo')->autoIncrement(); // Corregido
             $table->string('etiqueta_grupo', 7)->unique();
@@ -14,12 +15,12 @@ return new class extends Migration {
             $table->unsignedBigInteger('agrupamiento_idagrupamiento');
             $table->foreign('agrupamiento_idagrupamiento')->references('idagrupamiento')->on('agrupamiento')->onDelete('cascade');
             $table->unsignedBigInteger('categoria_idcategoria');
-            $table->foreign('categoria_idcategoria')->references('idcategoria')->on('categoria')->onDelete('cascade');
+            $table->foreign('categoria_idcategoria')->references('idcategoria')->on('categorias')->onDelete('cascade');
             $table->timestamps();
         });
     }
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('grupo');
     }
 };
-

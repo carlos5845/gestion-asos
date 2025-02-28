@@ -4,62 +4,97 @@ namespace App\Http\Controllers;
 
 use App\Models\ResolucionGdh;
 use Illuminate\Http\Request;
+use App\Models\Grupo;
+use Illuminate\Support\Facades\Storage;
 
 class ResolucionGdhController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $resoluciones = ResolucionGdh::with('grupo')->get();
+        return view('resolucion_gdh.index', compact('resoluciones'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $grupos = Grupo::all();
+        return view('resolucion_gdh.create', compact('grupos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'num_resolucion' => 'required|string|max:45|unique:resolucion_gdh,num_resolucion',
+            'fecha_emision' => 'required|date',
+            'archivo_gdh' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'grupo_idgrupo' => 'required|exists:grupo,idgrupo',
+        ]);
+
+        $archivoPath = null;
+        if ($request->hasFile('archivo_gdh')) {
+            $archivoPath = $request->file('archivo_gdh')->store('resoluciones_gdh', 'public');
+        }
+
+        ResolucionGdh::create([
+            'num_resolucion' => $request->num_resolucion,
+            'fecha_emision' => $request->fecha_emision,
+            'archivo_gdh' => $archivoPath,
+            'grupo_idgrupo' => $request->grupo_idgrupo,
+        ]);
+
+        return redirect()->route('resolucion_gdh.index')->with('success', 'Resolución GDH creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ResolucionGdh $resolucionGdh)
+    public function show($idresolucion_gdh)
     {
-        //
+        $resolucion = ResolucionGdh::with('grupo')->findOrFail($idresolucion_gdh);
+        return view('resolucion_gdh.show', compact('resolucion'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ResolucionGdh $resolucionGdh)
+    public function edit($idresolucion_gdh)
     {
-        //
+        $resolucion = ResolucionGdh::findOrFail($idresolucion_gdh);
+        $grupos = Grupo::all();
+        return view('resolucion_gdh.edit', compact('resolucion', 'grupos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ResolucionGdh $resolucionGdh)
+    public function update(Request $request, $idresolucion_gdh)
     {
-        //
+        $request->validate([
+            'num_resolucion' => 'required|string|max:45|unique:resolucion_gdh,num_resolucion,' . $idresolucion_gdh . ',idresolucion_gdh',
+            'fecha_emision' => 'required|date',
+            'archivo_gdh' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'grupo_idgrupo' => 'required|exists:grupo,idgrupo',
+        ]);
+
+        $resolucion = ResolucionGdh::findOrFail($idresolucion_gdh);
+
+        if ($request->hasFile('archivo_gdh')) {
+            if ($resolucion->archivo_gdh) {
+                Storage::disk('public')->delete($resolucion->archivo_gdh);
+            }
+            $archivoPath = $request->file('archivo_gdh')->store('resoluciones_gdh', 'public');
+            $resolucion->archivo_gdh = $archivoPath;
+        }
+
+        $resolucion->num_resolucion = $request->num_resolucion;
+        $resolucion->fecha_emision = $request->fecha_emision;
+        $resolucion->grupo_idgrupo = $request->grupo_idgrupo;
+        $resolucion->save();
+
+        return redirect()->route('resolucion_gdh.index')->with('success', 'Resolución GDH actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ResolucionGdh $resolucionGdh)
+    public function destroy($idresolucion_gdh)
     {
-        //
+        $resolucion = ResolucionGdh::findOrFail($idresolucion_gdh);
+
+        if ($resolucion->archivo_gdh) {
+            Storage::disk('public')->delete($resolucion->archivo_gdh);
+        }
+
+        $resolucion->delete();
+
+        return redirect()->route('resolucion_gdh.index')->with('success', 'Resolución GDH eliminada correctamente.');
     }
 }

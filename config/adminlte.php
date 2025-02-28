@@ -308,9 +308,9 @@ return [
             'text'    => 'Grupos y Asociaciones',
             'icon'    => 'fas fa-users',
             'submenu' => [
-                ['text' => 'Grupos', 'url' => 'grupos', 'icon' => 'fas fa-layer-group'],
+                ['text' => 'Grupos', 'url' => 'grupo', 'icon' => 'fas fa-layer-group'],
                 ['text' => 'Categorías', 'url' => 'categorias', 'icon' => 'fas fa-tags'],
-                ['text' => 'Agrupamientos', 'url' => 'agrupamientos', 'icon' => 'fas fa-object-group'],
+                ['text' => 'Agrupamientos', 'url' => 'agrupamiento', 'icon' => 'fas fa-object-group'],
             ],
         ],
 
@@ -318,8 +318,8 @@ return [
             'text'    => 'Socios',
             'icon'    => 'fas fa-user-friends',
             'submenu' => [
-                ['text' => 'Lista de Socios', 'url' => 'socios', 'icon' => 'fas fa-users'],
-                ['text' => 'Padrón de Socios', 'url' => 'padrones-socios', 'icon' => 'fas fa-address-book'], // Nombre más claro
+                ['text' => 'Lista de Socios', 'url' => 'socio', 'icon' => 'fas fa-users'],
+                ['text' => 'Padrón de Socios', 'url' => 'padron_socios', 'icon' => 'fas fa-address-book'], // Corregido: `padrones-socios` → `padron-socios`
             ],
         ],
 
@@ -327,8 +327,8 @@ return [
             'text'    => 'Junta Directiva',
             'icon'    => 'fas fa-user-tie',
             'submenu' => [
-                ['text' => 'Directivos', 'url' => 'junta-directiva', 'icon' => 'fas fa-briefcase'],
-                ['text' => 'Cargos', 'url' => 'cargos', 'icon' => 'fas fa-id-badge'],
+                ['text' => 'Directivos', 'url' => 'junta_directiva', 'icon' => 'fas fa-briefcase'],
+                ['text' => 'Cargos', 'url' => 'cargo', 'icon' => 'fas fa-id-badge'],
             ],
         ],
 
@@ -336,10 +336,10 @@ return [
             'text'    => 'Documentos y Actas',
             'icon'    => 'fas fa-folder-open',
             'submenu' => [
-                ['text' => 'Actas de Constitución', 'url' => 'actas-constitucion', 'icon' => 'fas fa-file-alt'], // Pluralizado
-                ['text' => 'Actas de Constatación', 'url' => 'actas-constatacion', 'icon' => 'fas fa-file-signature'], // Pluralizado
-                ['text' => 'Resoluciones GDH', 'url' => 'resoluciones-gdh', 'icon' => 'fas fa-gavel'], // Pluralizado
-                ['text' => 'Vigencias de Poder', 'url' => 'vigencias-poder', 'icon' => 'fas fa-university'], // Pluralizado
+                ['text' => 'Acta de Constitución', 'url' => 'acta_constitucion', 'icon' => 'fas fa-file-alt'], // Corregido: `actas-constitucion` → `acta-constitucion`
+                ['text' => 'Acta de Constatación', 'url' => 'acta_constatacion', 'icon' => 'fas fa-file-signature'], // Corregido: `actas-constatacion` → `acta-constatacion`
+                ['text' => 'Resoluciones GDH', 'url' => 'resolucion_gdh', 'icon' => 'fas fa-gavel'], // Corregido: `resoluciones-gdh` → `resolucion-gdh`
+                ['text' => 'Vigencia de Poder', 'url' => 'vigencia_poder', 'icon' => 'fas fa-university'], // Corregido: `vigencias-poder` → `vigencia-poder`
             ],
         ],
 
@@ -347,7 +347,7 @@ return [
             'text'    => 'Configuración',
             'icon'    => 'fas fa-cogs',
             'submenu' => [
-                ['text' => 'Días Laborables', 'url' => 'dias-laborables', 'icon' => 'fas fa-calendar-alt'], // Pluralizado
+                ['text' => 'Días Laborables', 'url' => 'dia_laborable', 'icon' => 'fas fa-calendar-alt'], // Corregido: `dias-laborables` → `dia-laborable`
             ],
         ],
     ],

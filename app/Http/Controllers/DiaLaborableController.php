@@ -7,59 +7,57 @@ use Illuminate\Http\Request;
 
 class DiaLaborableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $dias = DiaLaborable::all();
+        return view('dia_laborable.index', compact('dias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('dia_laborable.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'dia' => 'required|string|max:35|unique:dia_laborable,dia',
+        ]);
+
+        DiaLaborable::create($request->all());
+
+        return redirect()->route('dia_laborable.index')->with('success', 'Día Laborable creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(DiaLaborable $diaLaborable)
+    public function show($iddia_laborable)
     {
-        //
+        $dia = DiaLaborable::findOrFail($iddia_laborable);
+        return view('dia_laborable.show', compact('dia'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DiaLaborable $diaLaborable)
+    public function edit($iddia_laborable)
     {
-        //
+        $dia = DiaLaborable::findOrFail($iddia_laborable);
+        return view('dia_laborable.edit', compact('dia'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, DiaLaborable $diaLaborable)
+    public function update(Request $request, $iddia_laborable)
     {
-        //
+        $request->validate([
+            'dia' => 'required|string|max:35|unique:dia_laborable,dia,' . $iddia_laborable . ',iddia_laborable',
+        ]);
+
+        $dia = DiaLaborable::findOrFail($iddia_laborable);
+        $dia->update($request->all());
+
+        return redirect()->route('dia_laborable.index')->with('success', 'Día Laborable actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(DiaLaborable $diaLaborable)
+    public function destroy($iddia_laborable)
     {
-        //
+        $dia = DiaLaborable::findOrFail($iddia_laborable);
+        $dia->delete();
+
+        return redirect()->route('dia_laborable.index')->with('success', 'Día Laborable eliminado correctamente.');
     }
 }

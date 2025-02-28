@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('categoria', function (Blueprint $table) {
-            $table->unsignedBigInteger('idcategoria')->autoIncrement(); // Corregido
-            $table->string('tipo', 45);
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id('idcategoria'); // Clave primaria personalizada
+            $table->string('tipo', 45)->nullable(false); // Campo obligatorio
             $table->timestamps();
         });
     }
+
     public function down()
     {
-        Schema::dropIfExists('categoria');
+        Schema::dropIfExists('categorias');
     }
 };
