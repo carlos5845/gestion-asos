@@ -18,7 +18,10 @@
                         <th>ID</th>
                         <th>Tipo de Cargo</th>
                         <th>Fecha de Creación</th>
+                        
+                        @role('admin')
                         <th>Acciones</th>
+                        @endrole
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +30,7 @@
                             <td>{{ $cargo->idcargo }}</td>
                             <td>{{ $cargo->tipo_cargo }}</td>
                             <td>{{ $cargo->created_at->format('d-m-Y') }}</td>
+                           @role('admin')
                             <td>
                                 <a href="{{ route('cargo.show', $cargo->idcargo) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('cargo.edit', $cargo->idcargo) }}" class="btn btn-warning">Editar</a>
@@ -36,6 +40,7 @@
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este cargo?')">Eliminar</button>
                                 </form>
                             </td>
+                            @endrole
                         </tr>
                     @endforeach
                 </tbody>
